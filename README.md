@@ -1,4 +1,7 @@
 IssueQZ
 -------------------------------------------
-Github account : whwang5566
-Student ID     : R01944015
+name	       : ¤ý°¶¿«,±i®x·ì
+
+Github account : whwang5566,messiq
+
+Student ID     : R01944015,R02342011

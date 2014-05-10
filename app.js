@@ -30,7 +30,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-
+//API
 app.get('/', routes.index);
 app.get('/questions', question.list);
 app.post('/question', question.create);

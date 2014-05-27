@@ -10,9 +10,20 @@ var player1SpriteSheet;
 var player2SpriteSheet;
 
 function initGame(){
-	
+    var tmpQuestionPanel = '<li><input type="text" placeholder="New Task..."><span></span></li>',
+        addButton = $('#add'),
+        connected = $('.connected'),      // 三個 <ul>
+        placeholder = $('#placeholder'),  // 三個 <ul> 的容器
+        mainUl = $('.main'),              // main <ul>
+        deleteUl = $('.delete'),          // delete <ul>
+        doneUl = $('.done');              // done <ul>
+
     //resize canvas
- 	canvas = document.getElementById("gameStage");
+ 	  canvas = document.getElementById("gameStage");
+
+    var ctx = canvas.getContext('2d');;
+    ctx.canvas.width  = window.innerWidth;
+    //ctx.canvas.height = window.innerHeight;
 
    	//stage
     stage = new createjs.Stage("gameStage");
@@ -21,9 +32,11 @@ function initGame(){
     
     //background
     sceneBackground = new createjs.Bitmap("assets/background.jpeg"); 
-    sceneBackground.scaleX = sceneBackground.scaleY = 0.5;
+    //sceneBackground.width = stage.width;
+    //sceneBackground.height = stage.height;
+    sceneBackground.scaleX = sceneBackground.scaleY = 0.6;
 
-	//add container and background
+	  //add container and background
     stage.addChild(sceneBackground);
     stage.addChild(playerContainer);
     stage.addChild(uiContainer);

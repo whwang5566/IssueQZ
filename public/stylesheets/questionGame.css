@@ -1,0 +1,11 @@
+/*#gameStage {
+	background: url("../assets/background.jpeg");
+}*/
+
+.gameMainDiv {
+}
+
+.questionPanel{
+	width:70%;
+	margin: 0 auto;
+}

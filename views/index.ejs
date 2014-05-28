@@ -9,49 +9,51 @@
 	<link rel="stylesheet" href="/stylesheets/questionGame.css">
 </head>
 <body onload="initGame()">
-	<div class="gameMainDiv">
+	<div id="wrapper" class="center-block">
 		<canvas id="gameStage" width="1480" height="450"></canvas>
-		<div class="panel panel-info questionPanel">
-			<div class="panel-heading">
-				<h1 class="panel-title">Question</h1>
-			</div>
-			<div class="panel-body">
-				<p>服貿協議的全稱是什麼？</p>
-				<!--Radio-->
-				<div>
-					<div class="radio">
-			  			<label>
-			    		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-			    		海峽兩岸服務貿易協議
-			  			</label>
-					</div>
-					<div class="radio">
-			 			<label>
-			    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-			    		服貿熱飲
-			  			</label>
-					</div>
-					<div class="radio">
-			 			<label>
-			    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-			    		馬英九
-			  			</label>
-					</div>
-					<div class="radio">
-			 			<label>
-			    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-			    		我很帥
-			  			</label>
-					</div>
-
+		<div id="questionContainer">
+			<!-- <div class="panel panel-info questionPanel">
+				<div class="panel-heading">
+					<h1 class="panel-title">Question</h1>
 				</div>
+				<div class="panel-body">
+					<p class="question-title">服貿協議的全稱是什麼？</p>
+					
+					<div class="question-radio">
+						<div class="radio">
+				  			<label>
+				    		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+				    		海峽兩岸服務貿易協議
+				  			</label>
+						</div>
+						<div class="radio">
+				 			<label>
+				    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+				    		服貿熱飲
+				  			</label>
+						</div>
+						<div class="radio">
+				 			<label>
+				    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+				    		馬英九
+				  			</label>
+						</div>
+						<div class="radio">
+				 			<label>
+				    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+				    		我很帥
+				  			</label>
+						</div>
 
-				<p><a class="btn btn-primary btn-lg" role="button">Submit</a></p>
-				<!-- add new question , trigger modal-->
-				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-				  Add New Question
-				</button>
-			</div>
+					</div>
+
+					<p><a class="btn btn-primary btn-lg" role="button">Submit</a></p>
+					
+					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+					  Add New Question
+					</button>
+				</div>
+			</div> -->
 		</div>
 
 		<!-- Modal -->
@@ -63,9 +65,9 @@
 		        <h4 class="modal-title" id="myModalLabel">Add New Question</h4>
 		      </div>
 			      <div class="modal-body">
-			        <input type="text" class="form-control" id='addQuestionTitle' placeholder="Title">
-			        <p> Content: </p>
-			        <textarea class="form-control" id='addQuestionContent' rows="5"></textarea>
+			      	<p> Question: </p>
+			        <textarea class="form-control" id='addQuestionTitle' placeholder="Question" rows="3" value="question">
+			        </textarea>
 			        <div>
 				        <p> Answer: 
 							<select id='addQuestionAnswer'>
@@ -75,15 +77,15 @@
 								<option value='D'>D</option>
 							</select>
 				        </p>
-				        <span>(A)<input type="text" class="form-control" placeholder="Title"></span>
-				        <span>(B)<input type="text" class="form-control" placeholder="Title"></span>
-				        <span>(C)<input type="text" class="form-control" placeholder="Title"></span>
-				        <span>(D)<input type="text" class="form-control" placeholder="Title"></span>
+				        <span>(A)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer1"></span>
+				        <span>(B)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer2"></span>
+				        <span>(C)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer3"></span>
+				        <span>(D)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer4"></span>
 			      	</div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary" onclick="addNewQuestion()">Submit</button>
+			        <button type="button" class="btn btn-primary" onclick="addNewQuestionToServer()">Submit</button>
 			      </div>
 		    </div>
 		  </div>

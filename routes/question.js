@@ -24,6 +24,7 @@ exports.create = function(req, res){
 	//new question
 	var question = new Question(req.body);
 	console.log('req:'+JSON.stringify(req.body));
+  console.log('question:'+JSON.stringify(question));
 	
   	//save
   	question.save(function (err,newQuestion){

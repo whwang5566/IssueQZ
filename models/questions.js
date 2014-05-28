@@ -4,10 +4,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var QuestionSchema = new Schema({
-	title: {type:String, required:true},
-	content: {type:String, required:true},
+	question: {type:String, required:true},
 	answer: {type:String, required:true},
-	created: {	type: Date,default: Date.now},
+	answerset: {type:Array,required:true,default:[]},
+	created: {type: Date,default: Date.now},
 	updated: Date
 });
 

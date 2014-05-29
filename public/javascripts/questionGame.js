@@ -10,12 +10,16 @@ var player1SpriteSheet;
 var player2SpriteSheet;
 
 //ui element
+var currentQuestionPanel;
 var tmpQuestionPanel;
 var tmpQuestionRadio;
 var questionContainer;
-var modalBody;
+var addNewQuestionModalBody;
+var correctModalBody;
+var wrongModalBody;
 
 //data
+var currentAnswer;
 var questionArray;
 var currentQuestionIndex = 0;
 
@@ -30,10 +34,13 @@ var backgroundPosition = {x:0,y:0};
 function initGame(){
 
     //template elements
-    tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button">Submit</a></p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Add New Question</button></div></div>',
+    tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button" onclick="submitAnswer()">Submit</a></p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addNewQuestionModal">Add New Question</button></div></div>',
     tmpQuestionRadio = '<div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"></label></div>',
+    //tmpSubmitAnswerPanel = '<div class="panel answerPanel"><div class="panel-heading"><h1 class="panel-title">Answer</h1></div><div class="panel-body"><p>Test</p></div><button class="btn btn-primary btn-lg">OK</button></div>',
     questionContainer = $('#questionContainer'),
-    modalBody = $('#myModal');             // modal
+    correctModalBody = $('#correctAnswerModal'),
+    wrongModalBody = $('#wrongAnswerModal'),
+    addNewQuestionModalBody = $('#addNewQuestionModal');             // modal
 
     //resize canvas
  	canvas = document.getElementById("gameStage");
@@ -164,6 +171,43 @@ function gameEnd(){
     console.log('Game End!');
 }
 
+function submitAnswer(){
+    //get select data
+    var chosedAnswer = currentQuestionPanel.find('input[type=radio]:checked').val();
+    
+    if(currentAnswer == chosedAnswer){
+        console.log("Correct!");
+        correctModalBody.modal({backdrop:false});
+        //correctModalBody.modal('show');
+    }
+    else{
+        console.log("Wrong!");
+        wrongModalBody.modal({backdrop:false});
+    }
+    //alert('Test!');
+    //$(".alert").alert();
+
+    //next 
+    nextQuestion();
+}
+
+var charArray = ['A','B','C','D'];
+
+function nextQuestion(){
+    //Bug , not wait left fade out
+    currentQuestionPanel.addClass('animated bounceOutLeft');
+
+    currentQuestionPanel.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', new function(){
+        //remove self
+        currentQuestionPanel.remove();
+        //new question
+        currentQuestionIndex++;
+        setCurrentQuestion();
+    });
+    
+}
+
+
 //set current question
 function setCurrentQuestion(){
     //console.log('array:'+JSON.stringify(questionArray));
@@ -177,22 +221,27 @@ function setCurrentQuestion(){
         
         //get data
         var questionTitle = currentQuestion['question'];
-        var currentAnswer = currentQuestion['answer'];
+        currentAnswer = currentQuestion['answer'];
         var answerset = currentQuestion['answerset'];
         //create new question panel
-        var questionPanel = $(tmpQuestionPanel);
+        currentQuestionPanel = $(tmpQuestionPanel);
         var questionPanelRadio = $(tmpQuestionRadio+tmpQuestionRadio+tmpQuestionRadio+tmpQuestionRadio);
         
+
         //set data
-        questionPanel.find('#questionContent').html(questionTitle);
-        questionPanel.find('#questionRadio').append(questionPanelRadio);
-        questionPanel.find('#questionRadio').find('.radio').each(function(i,element){
-            console.log(element);
+        currentQuestionPanel.find('#questionContent').text(questionTitle);
+        currentQuestionPanel.find('#questionRadio').append(questionPanelRadio);
+        currentQuestionPanel.find('#questionRadio').find('.radio').each(function(i,element){
+            //set value
+            $(element).find('input[type=radio]').attr('value',charArray[i]);
             $(element).find('label').append(answerset[i]);
         });
         
         //append
-        questionPanel.appendTo(questionContainer);
+        currentQuestionPanel.appendTo(questionContainer);
+
+        //animation
+        currentQuestionPanel.addClass('animated bounceInRight');
     }
 }
 
@@ -228,21 +277,20 @@ function getQuestions(){
  function addNewQuestionToServer(){
 
  	//get modal body
- 	//var modalBody = $('#myModal');
     var answerSet = [];
-    answerSet.push(modalBody.find("#addQuestionAnswer1").val());
-    answerSet.push(modalBody.find("#addQuestionAnswer2").val());
-    answerSet.push(modalBody.find("#addQuestionAnswer3").val());
-    answerSet.push(modalBody.find("#addQuestionAnswer4").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer1").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer2").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer3").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer4").val());
 
     //console.log('as:'+answerSet);
 
  	//get data
  	var data = {
- 		question:modalBody.find('#addQuestionTitle').val(),
+ 		question:addNewQuestionModalBody.find('#addQuestionTitle').val(),
  		//content:modalBody.find('#addQuestionContent').val(),
         answerset:answerSet,
- 		answer:modalBody.find('#addQuestionAnswer').val()
+ 		answer:addNewQuestionModalBody.find('#addQuestionAnswer').val()
  	};
 
  	console.log('submit for add new question. Data:'+JSON.stringify(data));
@@ -264,6 +312,6 @@ function getQuestions(){
          });
 
     //hide modal
-    $('#myModal').modal('hide');
+    $('#addNewQuestionModal').modal('hide');
 
  }

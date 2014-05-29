@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="/stylesheets/style.css">
 	<link rel="stylesheet" href="/stylesheets/questionGame.css">
+	<link rel="stylesheet" href="/stylesheets/animate.css">
 </head>
 <body onload="initGame()">
 	<div id="wrapper" class="center-block">
@@ -55,9 +56,44 @@
 				</div>
 			</div> -->
 		</div>
+		
+		<!-- Answer Modal -->
+		<div class="modal fade" id="correctAnswerModal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">Answer</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>Correct!</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 
+		<div class="modal fade" id="wrongAnswerModal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title">Answer</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>Wront!</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
 		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="addNewQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">

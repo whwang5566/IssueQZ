@@ -15,4 +15,13 @@
 
 #timeCounterDiv{
 	text-align: center;
+	position:relative;
+}
+
+.game-lifebar{
+	position:relative;
+}
+
+.game-lifebar > div{
+	background:#00FA00;
 }

@@ -8,6 +8,8 @@ var uiContainer;
 //player
 var player1SpriteSheet;
 var player2SpriteSheet;
+var playerLife = 100;
+var lifebar;
 
 //ui element
 var currentQuestionPanel;
@@ -89,6 +91,15 @@ function initGame(){
     //get questions from DB
     getQuestions();  
 
+    //set lifebar
+    lifebar = $("#lifebar");
+    $(function() {
+        $("#lifebar").progressbar({
+          value: playerLife
+        });
+    });
+    //set data
+    //lifebar.find('div').css('background','#00FF00');
 }   
 
 function handleTick() {
@@ -97,7 +108,10 @@ function handleTick() {
     if(initialSetting == false){
          initialSceneSetting();
     }
-   
+
+    //set life bar
+    lifebar.progressbar( "value", playerLife);
+
 	//update
 	stage.update(); 
 }
@@ -176,9 +190,13 @@ function initPlayers(){
 
 //game end
 function gameEnd(){
+    //stop timer
+    $(".ccounter").ccountdownStop();
     //hide timer
     $(".ccounter").hide();
-
+    //gide lifebar
+    lifebar.hide();
+    
     console.log('Game End!');
 }
 
@@ -194,6 +212,9 @@ function submitAnswer(){
     else{
         console.log("Wrong!");
         wrongModalBody.modal({backdrop:false});
+
+        //decrease life
+        playerLife -= 20;
     }
     //alert('Test!');
     //$(".alert").alert();

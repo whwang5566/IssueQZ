@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="/stylesheets/style.css">
 	<link rel="stylesheet" href="/stylesheets/questionGame.css">
 	<link rel="stylesheet" href="/stylesheets/animate.css">
+	<link rel="stylesheet" href="/stylesheets/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/icomonn.css">
 </head>
 <body onload="initGame()">
@@ -50,54 +51,13 @@
 		<canvas id="gameStage" width="1480" height="450"></canvas>
 		<!-- Time counter-->
 		<div>
+			<div id="lifebar" class='game-lifebar'></div>
 			<div id="timeCounterDiv" class="ccounter">
 				<input class="knob second" data-width="160" data-min="0" data-max="15" data-displayPrevious=true data-fgColor="#ff003c" data-readOnly="true" value="0" data-bgcolor="#eee">
 			</div>
 		</div>
 		<!-- Question Panel -->
 		<div id="questionContainer">
-			<!-- <div class="panel panel-info questionPanel">
-				<div class="panel-heading">
-					<h1 class="panel-title">Question</h1>
-				</div>
-				<div class="panel-body">
-					<p class="question-title">服貿協議的全稱是什麼？</p>
-					
-					<div class="question-radio">
-						<div class="radio">
-				  			<label>
-				    		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-				    		海峽兩岸服務貿易協議
-				  			</label>
-						</div>
-						<div class="radio">
-				 			<label>
-				    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-				    		服貿熱飲
-				  			</label>
-						</div>
-						<div class="radio">
-				 			<label>
-				    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-				    		馬英九
-				  			</label>
-						</div>
-						<div class="radio">
-				 			<label>
-				    		<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-				    		我很帥
-				  			</label>
-						</div>
-
-					</div>
-
-					<p><a class="btn btn-primary btn-lg" role="button">Submit</a></p>
-					
-					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-					  Add New Question
-					</button>
-				</div>
-			</div> -->
 		</div>
 		
 		<!-- Answer Modal -->
@@ -173,6 +133,7 @@
 		<!--JS Script-->
 		<script type="text/javascript" src="/javascripts/createjs.min.js"></script>
 		<script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+		<script type="text/javascript" src="/javascripts/jquery-ui.custom.min.js"></script>
 		<script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/javascripts/questionGame.js"></script>
 		<script type="text/javascript" src="/javascripts/jquery.knob.js"></script>

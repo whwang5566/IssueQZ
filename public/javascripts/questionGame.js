@@ -31,10 +31,14 @@ var player2;
 var initialSetting = false;
 var backgroundPosition = {x:0,y:0};
 
+//timer
+var countdownTime = 15;
+
 function initGame(){
 
     //template elements
     tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button" onclick="submitAnswer()">Submit</a></p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addNewQuestionModal">Add New Question</button></div></div>',
+    tmpErrorPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Error</h1></div><div class="panel-body"><p></p><a class="btn btn-primary btn-lg" role="button" onclick="goBack()">Back</a></div></div>',
     tmpQuestionRadio = '<div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"></label></div>',
     //tmpSubmitAnswerPanel = '<div class="panel answerPanel"><div class="panel-heading"><h1 class="panel-title">Answer</h1></div><div class="panel-body"><p>Test</p></div><button class="btn btn-primary btn-lg">OK</button></div>',
     questionContainer = $('#questionContainer'),
@@ -96,6 +100,10 @@ function handleTick() {
    
 	//update
 	stage.update(); 
+}
+
+function goBack(){
+    window.history.back();
 }
 
 function initialSceneSetting(){
@@ -168,13 +176,16 @@ function initPlayers(){
 
 //game end
 function gameEnd(){
+    //hide timer
+    $(".ccounter").hide();
+
     console.log('Game End!');
 }
 
 function submitAnswer(){
     //get select data
     var chosedAnswer = currentQuestionPanel.find('input[type=radio]:checked').val();
-    
+    console.log('answer='+chosedAnswer);
     if(currentAnswer == chosedAnswer){
         console.log("Correct!");
         correctModalBody.modal({backdrop:false});
@@ -186,6 +197,9 @@ function submitAnswer(){
     }
     //alert('Test!');
     //$(".alert").alert();
+
+    //stop timer
+    $(".ccounter").ccountdownStop();
 
     //next 
     nextQuestion();
@@ -210,7 +224,20 @@ function nextQuestion(){
 
 //set current question
 function setCurrentQuestion(){
-    //console.log('array:'+JSON.stringify(questionArray));
+    
+    //cehck
+    if(questionArray.length === 0){
+        //error
+        var errorPanel = $(tmpErrorPanel);
+        errorPanel.find('.panel-body p').text('Ther is no questions in this category.');
+        
+        //append
+        errorPanel.appendTo(questionContainer);
+
+        //animation
+        errorPanel.addClass('animated bounceInRight');
+    }
+
     if(currentQuestionIndex >= questionArray.length){
         gameEnd();
     }
@@ -242,8 +269,16 @@ function setCurrentQuestion(){
 
         //animation
         currentQuestionPanel.addClass('animated bounceInRight');
+
+         //set timer
+        var today = new Date();
+        var timeStr = today.getHours()+":"+today.getMinutes()+":"+(today.getSeconds()+countdownTime);
+        $(".ccounter").ccountdown(today.getFullYear()+1,today.getMonth(),today.getDate(),timeStr,submitAnswer);
+
     }
+
 }
+
 
 //get questions from server
 function getQuestions(){

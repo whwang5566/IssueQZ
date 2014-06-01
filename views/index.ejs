@@ -8,10 +8,53 @@
 	<link rel="stylesheet" href="/stylesheets/style.css">
 	<link rel="stylesheet" href="/stylesheets/questionGame.css">
 	<link rel="stylesheet" href="/stylesheets/animate.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/icomonn.css">
 </head>
 <body onload="initGame()">
 	<div id="wrapper" class="center-block">
+		<!-- Nav bar -->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="#">IssueQZ</a>
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		        <li><a href="#">Homepage</a></li>
+		        <li class="active"><a href="#">QuestionGame</a></li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#">Login</a></li>
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action <b class="caret"></b></a>
+		          <ul class="dropdown-menu">
+		            <!-- <li><a href="#">Action</a></li> -->
+		            <li class="divider"></li>
+		            <li><a href="#" data-toggle="modal" data-target="#addNewQuestionModal">Add new Question</a></li>
+		          </ul>
+		        </li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+
 		<canvas id="gameStage" width="1480" height="450"></canvas>
+		<!-- Time counter-->
+		<div>
+			<div id="timeCounterDiv" class="ccounter">
+				<input class="knob second" data-width="160" data-min="0" data-max="15" data-displayPrevious=true data-fgColor="#ff003c" data-readOnly="true" value="0" data-bgcolor="#eee">
+			</div>
+		</div>
+		<!-- Question Panel -->
 		<div id="questionContainer">
 			<!-- <div class="panel panel-info questionPanel">
 				<div class="panel-heading">
@@ -83,7 +126,7 @@
 		        <h4 class="modal-title">Answer</h4>
 		      </div>
 		      <div class="modal-body">
-		        <p>Wront!</p>
+		        <p>Wrong!</p>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -132,5 +175,8 @@
 		<script type="text/javascript" src="/javascripts/jquery.min.js"></script>
 		<script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/javascripts/questionGame.js"></script>
+		<script type="text/javascript" src="/javascripts/jquery.knob.js"></script>
+		<script type="text/javascript" src="/javascripts/jquery.ccountdown.js"></script>
+		<script type="text/javascript" src="/javascripts/init.js"></script>
 </body>
 </html>

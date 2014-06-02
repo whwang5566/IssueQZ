@@ -23,5 +23,10 @@
 }
 
 .game-lifebar > div{
-	background:#00FA00;
+	background:#0DFF9B;
+}
+
+.redLargeFont{
+	color: red;
+	font: 42px;
 }

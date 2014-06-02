@@ -19,11 +19,13 @@ var questionContainer;
 var addNewQuestionModalBody;
 var correctModalBody;
 var wrongModalBody;
+var tmpFinalStatisticsPanel;
 
 //data
 var currentAnswer;
 var questionArray;
 var currentQuestionIndex = 0;
+var correctCount = 0;
 
 //sprite sheet
 var player1SpriteSheet;
@@ -42,7 +44,7 @@ function initGame(){
     tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button" onclick="submitAnswer()">Submit</a></p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addNewQuestionModal">Add New Question</button></div></div>',
     tmpErrorPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Error</h1></div><div class="panel-body"><p></p><a class="btn btn-primary btn-lg" role="button" onclick="goBack()">Back</a></div></div>',
     tmpQuestionRadio = '<div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"></label></div>',
-    //tmpSubmitAnswerPanel = '<div class="panel answerPanel"><div class="panel-heading"><h1 class="panel-title">Answer</h1></div><div class="panel-body"><p>Test</p></div><button class="btn btn-primary btn-lg">OK</button></div>',
+    tmpFinalStatisticsPanel = '<div class="panel questionPanel"><div class="panel-heading"><h1 class="panel-title">Statistics</h1></div><div class="panel-body"><p>Test</p></div><button class="btn btn-primary btn-lg" onclick="goBack()">OK</button></div>',
     questionContainer = $('#questionContainer'),
     correctModalBody = $('#correctAnswerModal'),
     wrongModalBody = $('#wrongAnswerModal'),
@@ -197,6 +199,19 @@ function gameEnd(){
     //gide lifebar
     lifebar.hide();
     
+    //statas
+    var statPanel = $(tmpFinalStatisticsPanel);
+
+    //set data
+    var correctRatio = ((correctCount)/(questionArray.length))*100;
+    statPanel.find('.panel-body p').html('您的答對率為 <span class="redLargeFont">'+correctRatio+'%</span>');
+
+    //append
+    statPanel.appendTo(questionContainer);
+
+    //animation
+    statPanel.addClass('animated bounceInRight');
+
     console.log('Game End!');
 }
 
@@ -207,6 +222,9 @@ function submitAnswer(){
     if(currentAnswer == chosedAnswer){
         console.log("Correct!");
         correctModalBody.modal({backdrop:false});
+
+        //add correct count
+        correctCount++;
         //correctModalBody.modal('show');
     }
     else{

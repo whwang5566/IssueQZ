@@ -23,7 +23,7 @@ var tmpFinalStatisticsPanel;
 
 //data
 var currentAnswer;
-var questionArray;
+var questionArray = [];
 var currentQuestionIndex = 0;
 var correctCount = 0;
 
@@ -39,6 +39,8 @@ var backgroundPosition = {x:0,y:0};
 var countdownTime = 15;
 
 function initGame(){
+
+    console.log('category:'+category);
 
     //template elements
     tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button" onclick="submitAnswer()">Submit</a></p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addNewQuestionModal">Add New Question</button></div></div>',
@@ -199,18 +201,22 @@ function gameEnd(){
     //gide lifebar
     lifebar.hide();
     
-    //statas
-    var statPanel = $(tmpFinalStatisticsPanel);
+    //check
+    if(questionArray.length != 0)
+    {
+        //statas
+        var statPanel = $(tmpFinalStatisticsPanel);
 
-    //set data
-    var correctRatio = ((correctCount)/(questionArray.length))*100;
-    statPanel.find('.panel-body p').html('您的答對率為 <span class="redLargeFont">'+correctRatio+'%</span>');
+        //set data
+        var correctRatio = ((correctCount)/(questionArray.length))*100;
+        statPanel.find('.panel-body p').html('您的答對率為 <span class="redLargeFont">'+correctRatio+'%</span>');
 
-    //append
-    statPanel.appendTo(questionContainer);
+        //append
+        statPanel.appendTo(questionContainer);
 
-    //animation
-    statPanel.addClass('animated bounceInRight');
+        //animation
+        statPanel.addClass('animated bounceInRight');
+    }
 
     console.log('Game End!');
 }
@@ -265,7 +271,7 @@ function nextQuestion(){
 function setCurrentQuestion(){
     
     //cehck
-    if(questionArray.length === 0){
+    if((questionArray === undefined) || (questionArray.length === 0)){
         //error
         var errorPanel = $(tmpErrorPanel);
         errorPanel.find('.panel-body p').text('Ther is no questions in this category.');
@@ -323,11 +329,15 @@ function setCurrentQuestion(){
 function getQuestions(){
 
     //get question url
-    var url = "/questions"; 
+    if((category === undefined) || category == "undefined"){
+        category = "nuclear";
+    }
+
+    var url = "/questions/"+category; 
 
     //post to server
     $.ajax({
-           type: "GET",
+           type: "POST",
            url: url,
            success: function(data)
            {
@@ -363,8 +373,11 @@ function getQuestions(){
  	var data = {
  		question:addNewQuestionModalBody.find('#addQuestionTitle').val(),
  		//content:modalBody.find('#addQuestionContent').val(),
+        category:addNewQuestionModalBody.find('#addQuestionCategory').val(),
         answerset:answerSet,
- 		answer:addNewQuestionModalBody.find('#addQuestionAnswer').val()
+ 		answer:addNewQuestionModalBody.find('#addQuestionAnswer').val(),
+        explanation:addNewQuestionModalBody.find('#addQuestionExplanation').val(),
+        link:addNewQuestionModalBody.find('#addQuestionLink').val()
  	};
 
  	console.log('submit for add new question. Data:'+JSON.stringify(data));

@@ -19,7 +19,9 @@
 }
 
 .game-lifebar{
-	position:relative;
+	position:absolute;
+	width:100%;
+	margin-top: 45px;
 }
 
 .game-lifebar > div{

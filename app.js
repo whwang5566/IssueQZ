@@ -32,7 +32,8 @@ if ('development' == app.get('env')) {
 
 //API
 app.get('/', routes.index);
-app.get('/questions', question.list);
+app.get('/:category', routes.index);
+app.post('/questions/:category', question.list);
 app.post('/question', question.create);
 
 http.createServer(app).listen(app.get('port'), function(){

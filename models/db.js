@@ -17,3 +17,4 @@ mongoose.connection.once('open',function (){
 
 //require models schema
 require('./questions');
+require('./users');

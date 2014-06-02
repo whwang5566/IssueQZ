@@ -4,5 +4,8 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+	var category = req.params.category;
+	console.log(category);
+  	res.render('index', { category: category});
+  	//res.render('index');
 };

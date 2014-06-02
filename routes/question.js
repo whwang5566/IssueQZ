@@ -7,13 +7,26 @@ var Question = mongoose.model('Question');
 
 exports.list = function(req, res){
   	//res.send("respond with a resource :");
-  	Question.find(function (err,questions,count){
-  		if(err){
-  			console.error(err);
-  			req.json({error: err.name}, 500);
-  		}
-  		res.json({questions:questions});
-  	});
+    var category = req.params.category;
+    if(category === undefined){
+      category = "nuclear";
+    }
+    
+  	// Question.find(function (err,questions,count){
+  	// 	if(err){
+  	// 		console.error(err);
+  	// 		req.json({error: err.name}, 500);
+  	// 	}
+  	// 	res.json({questions:questions});
+  	// });
+    Question.find().where('category').equals(category).exec(function (err,questions,count){
+      if(err){
+        console.error(err);
+        req.json({error: err.name}, 500);
+      }
+      res.json({questions:questions});
+    });
+
 };
 
 /*

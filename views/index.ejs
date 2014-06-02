@@ -10,6 +10,9 @@
 	<link rel="stylesheet" href="/stylesheets/animate.css">
 	<link rel="stylesheet" href="/stylesheets/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/icomonn.css">
+	<script type="text/javascript">
+		var category = "<%= category %>";
+	</script>
 </head>
 <body onload="initGame()">
 	<div id="wrapper" class="center-block">
@@ -104,23 +107,36 @@
 		        <h4 class="modal-title" id="myModalLabel">Add New Question</h4>
 		      </div>
 			      <div class="modal-body">
-			      	<p> Question: </p>
-			        <textarea class="form-control" id='addQuestionTitle' placeholder="Question" rows="3" value="question">
+			      	<p> *Question: </p>
+			        <textarea class="form-control" id='addQuestionTitle' rows="3" value="question">
 			        </textarea>
 			        <div>
-				        <p> Answer: 
+				        <p> *Answer: 
 							<select id='addQuestionAnswer'>
 								<option value='A'>A</option>
 								<option value='B'>B</option>
 								<option value='C'>C</option>
 								<option value='D'>D</option>
 							</select>
+							*Category: 
+							<select id='addQuestionCategory'>
+								<option value='nuclear'>nuclear</option>
+								<option value='news'>news</option>
+								<option value='international'>international</option>
+								<option value='fun'>fun</option>
+							</select>
+
 				        </p>
 				        <span>(A)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer1"></span>
 				        <span>(B)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer2"></span>
 				        <span>(C)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer3"></span>
 				        <span>(D)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer4"></span>
 			      	</div>
+			      	<p> Explanation: </p>
+			        <textarea class="form-control" id='addQuestionExplanation' rows="2" value="explanation">
+			        </textarea>
+			        <p> Link: </p>
+			        <input type="text" class="form-control" id='addQuestionLink' placeholder="Reference Link">
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

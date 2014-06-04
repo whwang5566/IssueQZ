@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IssueQz</title>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/homepage-style.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+  
+    <header class="header fix-header">
+          <div class="container">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+
+                  <img src="/images/brand.png" class="brand img-responsive img-rounded" href="#">
+                  <h1>IssueQz</h1>
+                  
+                
+                  <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav pull-right">
+                      <li class="active"><a href="/">Home</a></li>
+                      <li><a href="/profile">Profile</a></li>
+                      <li id='game-btn' onclick='scrollToGameDiv()'><a>Game</a></li>
+                      <li><a href="/events">Events</a></li>
+                      <li><a href="/about">About</a></li>
+                      <li><a href="/<%= login %>" id='loginBtn'><%= login %></a></li>
+                    </ul>
+                  </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+          </div> <!-- /.container -->
+    </header>

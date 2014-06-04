@@ -1,159 +1,124 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>IssueQZ</title>
-	<!--CSS-->
-	<link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="/stylesheets/style.css">
-	<link rel="stylesheet" href="/stylesheets/questionGame.css">
-	<link rel="stylesheet" href="/stylesheets/animate.css">
-	<link rel="stylesheet" href="/stylesheets/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="/stylesheets/icomonn.css">
-	<script type="text/javascript">
-		var category = "<%= category %>";
-	</script>
-</head>
-<body onload="initGame()">
-	<div id="wrapper" class="center-block">
-		<!-- Nav bar -->
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="container-fluid">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="#">IssueQZ</a>
-		    </div>
+<% include _header.ejs %>
 
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav">
-		        <li><a href="#">Homepage</a></li>
-		        <li class="active"><a href="#">QuestionGame</a></li>
-		      </ul>
-		      <ul class="nav navbar-nav navbar-right">
-		        <li><a href="#">Login</a></li>
-		        <li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action <b class="caret"></b></a>
-		          <ul class="dropdown-menu">
-		            <!-- <li><a href="#">Action</a></li> -->
-		            <li class="divider"></li>
-		            <li><a href="#" data-toggle="modal" data-target="#addNewQuestionModal">Add new Question</a></li>
-		          </ul>
-		        </li>
-		      </ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		</nav>
+    <!-- jumbotron -->
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row text-center">
+          <h1>Hello <%=name%>! Welcome to <span>IssueQz</span></h1>
+          <h3>get closer to <span>Society Movement</span></h3>
+          <a class="btn btn-primary btn-lg" onclick='scrollToGameDiv()'>Have Fun!</a>
+        </div>
+      </div>
+    </div>
+    <!-- end of jumbotron -->
 
-		<canvas id="gameStage" width="1480" height="450"></canvas>
-		<!-- Time counter-->
-		<div>
-			<div id="lifebar" class='game-lifebar'></div>
-			<div id="timeCounterDiv" class="ccounter">
-				<input class="knob second" data-width="160" data-min="0" data-max="15" data-displayPrevious=true data-fgColor="#ff003c" data-readOnly="true" value="0" data-bgcolor="#eee">
-			</div>
-		</div>
-		<!-- Question Panel -->
-		<div id="questionContainer">
-		</div>
-		
-		<!-- Answer Modal -->
-		<div class="modal fade" id="correctAnswerModal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">Answer</h4>
-		      </div>
-		      <div class="modal-body">
-		        <p>Correct!</p>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-		      </div>
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+    <!-- services -->
+    <div class="services">
+      <div class="container">
+        <div class="row">
+          <div class="services-rev text-center col-md-4">
+              <span class="glyphicon glyphicon-backward"></span>
+              <h4>議題回顧</h4>
+              <p>是否覺得資訊爆炸而讓你想關注的議題被淹沒了，或是好奇自己錯過了什麼、忽略了什麼可能影響我們的大事</p>
+              <a href="#" class="more">learn more</a>
+          </div>
+          <!-- end services-review -->
+          <div class="services-dis text-center col-md-4">
+              <span class="glyphicon glyphicon-search"></span>
+              <h4>深入探討</h4>
+              <p>不知道該去哪裡找懶人包嗎，還是眾多版本讓你暈頭轉向，資訊的正確跟吸收資訊是同樣重要的！</p>
+              <a href="#" class="more">learn more</a>
+          </div>
+          <!-- end services-dicuss -->
+          <div class="services-tes text-center col-md-4">
+              <span class="glyphicon glyphicon-ok"></span>
+              <h4>小試身手</h4>
+              <p>來試試看你對於公共議題的了解到底有多少！</p>
+              <a href="#" class="more">learn more</a>
+          </div>
+          <!-- end services-test -->
+        </div>
+      </div>
+    </div><!-- end services -->
 
-		<div class="modal fade" id="wrongAnswerModal">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">Answer</h4>
-		      </div>
-		      <div class="modal-body">
-		        <p>Wrong!</p>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-		      </div>
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
-		
-		<!-- Modal -->
-		<div class="modal fade" id="addNewQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Add New Question</h4>
-		      </div>
-			      <div class="modal-body">
-			      	<p> *Question: </p>
-			        <textarea class="form-control" id='addQuestionTitle' rows="3" value="question">
-			        </textarea>
-			        <div>
-				        <p> *Answer: 
-							<select id='addQuestionAnswer'>
-								<option value='A'>A</option>
-								<option value='B'>B</option>
-								<option value='C'>C</option>
-								<option value='D'>D</option>
-							</select>
-							*Category: 
-							<select id='addQuestionCategory'>
-								<option value='nuclear'>nuclear</option>
-								<option value='news'>news</option>
-								<option value='international'>international</option>
-								<option value='fun'>fun</option>
-							</select>
+    <!-- topics -->
+    <div class="topics" id='topicsDiv'>
+    
+      <div class="heading text-center">
+        <div class="container">
+          <h1>Game Topics</h1>
+        </div>
+      </div><!-- end heading -->
+    
+      <div class="gallery clearfix">
+        <div class="gallery-inner cropImg">
+          <img src="/images/gallery/1.jpg" alt="thumbnail" class="img-responsive imgFill" /> 
+          
+          <div class="caption">
+            <a href="game/nuclear" class='fill'>
+              <div class="caption-heading visible-lg text-center">
+                <div class="emptyDiv"></div>
+                <h4>Nuclear</h4>
+                <small>Oct 22, 2014</small>
+                <p>
+                  <span class="enter-font">Enter</span>
+                </p>
+              </div>
+            </a>
+          </div><!-- caption -->
+        </div><!-- end gallery-inner -->
+        
+        <div class="gallery-inner cropImg">
+          <img src="/images/gallery/2.jpg" alt="thumbnail" class="img-responsive imgFill" /> 
+          
+          <div class="caption">
+            <a href="game/news" class='fill'>
+              <div class="caption-heading visible-lg text-center">
+                <div class="emptyDiv"></div>
+                <h4>News</h4>
+                <small>Oct 22, 2014</small>
+                 <p>
+                  <span class="enter-font">Enter</span>
+                </p>
+              </div>
+            </a>
+          </div><!-- caption -->
+        </div><!-- end gallery-inner -->
+        
+        <div class="gallery-inner cropImg">
+          <img src="/images/gallery/3.jpg" alt="thumbnail" class="img-responsive imgFill" /> 
+          
+          <div class="caption">
+            <a href="game/international" class='fill'>
+              <div class="caption-heading visible-lg text-center">
+                <div class="emptyDiv"></div>
+                <h4>International</h4>
+                <small>Oct 22, 2014</small>
+                <p>
+                    <span class="enter-font">Enter</span>
+                </p>
+              </div>
+            </a>
+          </div><!-- caption -->
+        </div><!-- end gallery-inner -->
+        
+        <div class="gallery-inner cropImg">
+          <img src="/images/gallery/4.jpg" alt="thumbnail" class="img-responsive imgFill" /> 
+          
+          <div class="caption">
+            <a href="game/fun" class='fill'>
+              <div class="caption-heading visible-lg text-center"> 
+                <div class="emptyDiv"></div>
+                <h4>Fun</h4>
+                <small>Oct 22, 2014</small>
+                <p>
+                  <span class="enter-font">Enter</span>
+                </p>
+              </div>
+            </a>
+          </div><!-- caption -->
+        </div><!-- end gallery-inner -->
+      </div><!-- end gallery -->
+    </div><!-- end topics -->
 
-				        </p>
-				        <span>(A)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer1"></span>
-				        <span>(B)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer2"></span>
-				        <span>(C)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer3"></span>
-				        <span>(D)<input type="text" class="form-control" placeholder="Title" id="addQuestionAnswer4"></span>
-			      	</div>
-			      	<p> Explanation: </p>
-			        <textarea class="form-control" id='addQuestionExplanation' rows="2" value="explanation">
-			        </textarea>
-			        <p> Link: </p>
-			        <input type="text" class="form-control" id='addQuestionLink' placeholder="Reference Link">
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary" onclick="addNewQuestionToServer()">Submit</button>
-			      </div>
-		    </div>
-		  </div>
-		</div>
-	</div>
-		<!--JS Script-->
-		<script type="text/javascript" src="/javascripts/createjs.min.js"></script>
-		<script type="text/javascript" src="/javascripts/jquery.min.js"></script>
-		<script type="text/javascript" src="/javascripts/jquery-ui.custom.min.js"></script>
-		<script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
-		<script type="text/javascript" src="/javascripts/questionGame.js"></script>
-		<script type="text/javascript" src="/javascripts/jquery.knob.js"></script>
-		<script type="text/javascript" src="/javascripts/jquery.ccountdown.js"></script>
-		<script type="text/javascript" src="/javascripts/init.js"></script>
-</body>
-</html>
+<% include _footer.ejs %>

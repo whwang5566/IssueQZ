@@ -46,7 +46,12 @@ function initProfile(res){
 	var correctCount = profileData.correctcount;
 	StatContainer.find('#correctcount').text(correctCount);
 	StatContainer.find('#totalcount').text(totalCount);
-	StatContainer.find('#correctRatio').text(((correctCount/totalCount)*100).toFixed(1));
+	if(totalCount == 0) {
+		StatContainer.find('#correctRatio').text(0);
+	}
+	else{
+		StatContainer.find('#correctRatio').text(((correctCount/totalCount)*100).toFixed(1));
+	}
 }
 
 //Event
@@ -83,7 +88,6 @@ function initEvents(res){
 		error:function(){
 			console.log("can't get user data");
 			$('#event-info').text('There is no events.');
-			alert('Please Login');
 		}
 	});
 }
@@ -161,3 +165,50 @@ function setEvents(res){
 
 
 }
+
+//add question
+ function addNewQuestionToServer(){
+
+ 	var addNewQuestionModalBody = $('#addNewQuestionModal');
+ 	//get modal body
+    var answerSet = [];
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer1").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer2").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer3").val());
+    answerSet.push(addNewQuestionModalBody.find("#addQuestionAnswer4").val());
+
+    //console.log('as:'+answerSet);
+
+ 	//get data
+ 	var data = {
+ 		question:addNewQuestionModalBody.find('#addQuestionTitle').val(),
+ 		//content:modalBody.find('#addQuestionContent').val(),
+        category:addNewQuestionModalBody.find('#addQuestionCategory').val(),
+        answerset:answerSet,
+ 		answer:addNewQuestionModalBody.find('#addQuestionAnswer').val(),
+        explanation:addNewQuestionModalBody.find('#addQuestionExplanation').val(),
+        link:addNewQuestionModalBody.find('#addQuestionLink').val()
+ 	};
+
+ 	console.log('submit for add new question. Data:'+JSON.stringify(data));
+ 	
+    var url = "/question"; // the script where you handle the form input.
+    
+    //post to server
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: data, 
+           success: function(data)
+           {
+                //alert('Add Success!'); 
+           },
+           error: function(){
+                alert('Add Error!')
+           }
+         });
+
+    //hide modal
+    $('#addNewQuestionModal').modal('hide');
+
+ }

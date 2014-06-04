@@ -79,13 +79,22 @@ var Users = mongoose.model('User');
 exports.userList = function(req, res){
   //res.send("respond with a resource");
 
-  Users.find(function (err,users,count){
-  		if(err){
-  			console.error(err);
-  			req.json({error: err.name}, 500);
-  		}
-  		res.json({users:users});
-  	});
+   //check login
+  if(req.isAuthenticated()){
+    var fbid = req.user && req.user.id;
+    Users.find().where('fbid').equals(fbid).exec(function (err,users,count){
+      if(err){
+        //console.error(err);
+        req.json({error: "Can't Find User"}, 500);
+      }
+      res.json(users);
+    });
+    
+  }
+  else{
+    req.json({error: "Please Login"}, 500);
+  }
+
 };
 
 

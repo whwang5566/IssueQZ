@@ -20,7 +20,7 @@ function scrollToGameDiv(){
  *	for Profile
  */
 function getUser(){
-	$ajax({
+	$.ajax({
 		url:'/user',
 		type:'GET',
 		//datatype:'json'
@@ -31,6 +31,6 @@ function getUser(){
 	});
 }
 
-function initProfile(){
-
+function initProfile(res){
+	console.log("msg:"+res);
 }

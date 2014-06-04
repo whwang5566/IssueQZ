@@ -47,6 +47,7 @@ app.get('/about', routes.aboutPage);
 app.get('/events', routes.eventsPage);
 app.get('/profile', routes.profilePage);
 app.get('/user', routes.userList);
+//app.get('/createUser', routes.createUser);
 app.get('/game/:category',routes.game);
 app.post('/questions/:category', routes.questionsList);
 app.post('/question', routes.createQuestion);

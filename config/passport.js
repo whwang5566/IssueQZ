@@ -1,8 +1,15 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-var clientID = '755158034503682';
-var clientSecret = '7466c7fa6370d33ff9da3a21c8d35e70';
+//var clientID = '736947549697888';
+var clientID = '736936806365629';
+
+//var clientSecret = '5507b62400511ed11e00ad0ab17c6968';
+var clientSecret = 'dd03f3b95e578ce6dd66a4965c7ff220';
+
+//db
+var mongoose = require('mongoose');
+var Users = mongoose.model('User');
 
 passport.use(new FacebookStrategy({
   clientID: process.env.FB_APP_ID || clientID,
@@ -13,6 +20,9 @@ passport.use(new FacebookStrategy({
   // http://passportjs.org/guide/profile/
   // Once the profile is stored in session, it will be available in req.user.
   //
+
+  //create user
+  createUser(profile.id);
   done(null, profile);
 }));
 
@@ -35,3 +45,43 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
+
+
+
+//create user
+function createUser(id){
+
+  //check login
+  if(id){
+    //login
+    var fbid = id;
+   
+    //new question
+    var user = new Users({'fbid':fbid});
+    
+    Users.find().where('fbid').equals(fbid).exec(function (err,users){
+      if(err){
+        console.error(err);
+      }
+
+      //if not exist
+      console.log('count:'+users.length);
+      if(users.length == 0){
+          console.log('Create New User. fbid:'+fbid);
+          //create user
+          //save
+          user.save(function (err,newUser){
+            if(err){
+              console.error(err);
+            }
+          });
+      }
+    });
+  }
+  else{
+    //not login
+    console.log('id error');
+  }
+
+  
+};

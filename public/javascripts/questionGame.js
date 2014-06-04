@@ -22,6 +22,7 @@ var wrongModalBody;
 var tmpFinalStatisticsPanel;
 
 //data
+var questionNum = 0.0;
 var currentAnswer;
 var questionArray = [];
 var currentQuestionIndex = 0;
@@ -43,10 +44,10 @@ function initGame(){
     console.log('category:'+category);
 
     //template elements
-    tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button" onclick="submitAnswer()">Submit</a></p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addNewQuestionModal">Add New Question</button></div></div>',
+    tmpQuestionPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Question</h1></div><div class="panel-body"><p class="question-title" id="questionContent"></p><div id="questionRadio"></div><p><a class="btn btn-primary btn-lg" role="button" onclick="submitAnswer()">Submit</a></p></div></div>',
     tmpErrorPanel = '<div class="panel panel-info questionPanel"><div class="panel-heading"><h1 class="panel-title">Error</h1></div><div class="panel-body"><p></p><a class="btn btn-primary btn-lg" role="button" onclick="goBack()">Back</a></div></div>',
     tmpQuestionRadio = '<div class="radio"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"></label></div>',
-    tmpFinalStatisticsPanel = '<div class="panel questionPanel"><div class="panel-heading"><h1 class="panel-title">Statistics</h1></div><div class="panel-body"><p>Test</p></div><button class="btn btn-primary btn-lg" onclick="goBack()">OK</button></div>',
+    tmpFinalStatisticsPanel = '<div class="panel questionPanel"><div class="panel-heading"><h1 class="panel-title">Statistics</h1></div><div class="panel-body"><p>Test</p></div><button class="btn btn-primary btn-lg" onclick="goEvent()">OK</button></div>',
     questionContainer = $('#questionContainer'),
     correctModalBody = $('#correctAnswerModal'),
     wrongModalBody = $('#wrongAnswerModal'),
@@ -69,7 +70,7 @@ function initGame(){
     
     //sceneBackground.width = stage.width;
     //sceneBackground.height = stage.height;
-    sceneBackground.scaleX = sceneBackground.scaleY = 0.6;
+    sceneBackground.scaleX = sceneBackground.scaleY = 0.4;
     
     //console.log("width1:"+window.innerWidth+" width2:"+sceneBackground.getBounds());
 	//add container and background
@@ -122,6 +123,10 @@ function handleTick() {
 
 function goBack(){
     window.history.back();
+}
+
+function goEvent(){
+    window.location.href = '/events';
 }
 
 function initialSceneSetting(){
@@ -177,14 +182,14 @@ function initPlayers(){
     */
 
     //player1 = new createjs.Sprite(player1SpriteSheet);
-    player1 = new createjs.Bitmap("assets/player1.png");
-    player1.scaleX = player1.scaleY = 0.5;
+    player1 = new createjs.Bitmap("assets/ma1.png");
+    //player1.scaleX = player1.scaleY = 1.0;
     player1.x = 0;
     player1.y = 0;
 
-    player2 = new createjs.Bitmap("assets/player2.png");
-    //player2.scaleX = player1.scaleY = 0.5;
-    player2.x = 1000;
+    player2 = new createjs.Bitmap("assets/su1.png");
+    player2.scaleX = player1.scaleY = 0.9;
+    player2.x = 400;
     player2.y = 0;
 
     playerContainer.addChild(player1);
@@ -208,7 +213,7 @@ function gameEnd(){
         var statPanel = $(tmpFinalStatisticsPanel);
 
         //set data
-        var correctRatio = ((correctCount)/(questionArray.length))*100;
+        var correctRatio = ((correctCount)/(questionNum))*100;
         statPanel.find('.panel-body p').html('您的答對率為 <span class="redLargeFont">'+correctRatio+'%</span>');
 
         //append
@@ -216,12 +221,39 @@ function gameEnd(){
 
         //animation
         statPanel.addClass('animated bounceInRight');
+
+        //send data
+        var data = {};
+        if(category!=undefined){
+            console.log('questionArray:'+questionArray);
+            data.totalCount = questionNum;
+            data.correctCount = correctCount;
+            data.category = category;
+            data.questions = [];
+            for(var i = 0;i<questionArray.length;i++){
+                data.questions.push(questionArray[i]._id);
+            }
+        }
+        //category
+        $.ajax({
+            url:'/updateUser',
+            type:'POST',
+            data:data,
+            //datatype:'json'
+            success:function(){ 
+                console.log('update success!'); },
+            error:function(){ 
+                console.log("can't update user data");
+            }
+        });
     }
 
     console.log('Game End!');
 }
 
 function submitAnswer(){
+
+    questionNum++;
     //get select data
     var chosedAnswer = currentQuestionPanel.find('input[type=radio]:checked').val();
     console.log('answer='+chosedAnswer);
@@ -242,6 +274,10 @@ function submitAnswer(){
     }
     //alert('Test!');
     //$(".alert").alert();
+
+    if(playerLife <=0){
+        gameEnd();
+    }
 
     //stop timer
     $(".ccounter").ccountdownStop();

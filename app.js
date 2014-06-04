@@ -51,6 +51,8 @@ app.get('/user', routes.userList);
 app.get('/game/:category',routes.game);
 app.post('/questions/:category', routes.questionsList);
 app.post('/question', routes.createQuestion);
+app.post('/getQuestions', routes.getQuestions);
+app.post('/updateUser', routes.updateUser);
 
 //fb login
 app.get('/login',function(req, res, next){

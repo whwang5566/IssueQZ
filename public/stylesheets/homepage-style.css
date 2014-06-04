@@ -319,3 +319,49 @@ a.fill:hover {
   -ms-transition: background-color 1000ms linear;
   transition: background-color 1000ms linear;
 }*/
+.about-container{
+  padding-top: 150px;
+  background-color: #222;
+}
+
+.event-div{
+  padding-top: 100px;
+  text-align: center;
+  background-color: rgb(200,200,200);
+  overflow:hidden;
+}
+
+#event-cotainer{
+  margin: 20px auto;
+  width:70%;
+  background-color: rgb(230,230,230);
+}
+
+body{
+  background-color: #222;
+}
+
+p.large-red{
+  color:red;
+  font-size: 34px;
+}
+
+a#link{
+  word-wrap: break-word;
+}
+
+#event-cotainer.nuclear{
+  background-color: rgba(255,131,30,0.5);
+}
+
+#event-cotainer.city{
+  background-color: rgba(102,232,95,0.5);
+}
+
+#event-cotainer.trade{
+  background-color: rgba(102,232,217,0.5);
+}
+
+#event-cotainer.economy{
+  background-color: rgba(255,160,148,0.5);
+}

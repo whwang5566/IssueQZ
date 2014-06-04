@@ -1,0 +1,27 @@
+.profile-imageDiv{
+  height:100px;
+}
+
+.profile{
+    padding-top: 100px;
+    width: 70%;
+    height:70%;
+    margin: 0 auto;
+}
+
+.fill-image{
+  max-height: 100%;
+}
+
+.profileContainer{
+  padding-top: 50px;
+}
+
+body{
+  background-color: #333;
+}
+
+.red-font{
+	font-size: 32px;
+	color: #FA0000;
+}

@@ -22,7 +22,7 @@ passport.use(new FacebookStrategy({
   //
 
   //create user
-  createUser(profile.id);
+  createUser(profile.id,profile.displayName);
   done(null, profile);
 }));
 
@@ -49,7 +49,7 @@ passport.deserializeUser(function(user, done) {
 
 
 //create user
-function createUser(id){
+function createUser(id,name){
 
   //check login
   if(id){
@@ -57,7 +57,7 @@ function createUser(id){
     var fbid = id;
    
     //new question
-    var user = new Users({'fbid':fbid});
+    var user = new Users({'fbid':fbid,'name':name});
     
     Users.find().where('fbid').equals(fbid).exec(function (err,users){
       if(err){

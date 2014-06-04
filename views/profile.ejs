@@ -1,36 +1,25 @@
 <% include _header.ejs %>
-
+<link href="/stylesheets/profile-style.css" rel="stylesheet">
 <div id="profile-div">
-
 </div>
-
 <!-- jumbotron -->
-<div class="jumbotron">
-<div class="container">
-  <table class="table table-hover">
-    <thead>
-      <th>#</th>
-      <th>Name</th>
-      <th>Events</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Ralph</td>
-        <td>Enter this website on 0602</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Grass</td>
-        <td>Enter this website on 0603</td>
-      </tr>
-    </table>
+<div class="jumbotron profile text-center" id='profileContainer'>
+  <div class="profile-imageDiv">
+    <img class="img-circle fill-image" src="/images/placeholder.jpg" id="profileImg">
+    </img>
+  </div>
+  <div class="container profileContainer">
+    <p>名稱:<span id="profileName">Guest</span></p>
+    <div id="StatsData">
+    	<p>統計:</p>
+    	<p>總累計題數:<span id="totalcount">0</span></p>
+    	<p>總答對題數:<span id="correctcount">0</span></p>
+    	<p>答對率:<span id="correctRatio" class="red-font">0</span><span class="red-font">%</span></p>
+    </div>
   </div>
 </div>
 <!-- end of jumbotron -->
-
 <% include _footer.ejs %>
-
 <script type="text/javascript">
-    getUser();
+getUser();
 </script>

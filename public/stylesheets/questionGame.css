@@ -16,12 +16,13 @@
 #timeCounterDiv{
 	text-align: center;
 	position:relative;
+	height:120px;
 }
 
 .game-lifebar{
 	position:absolute;
 	width:100%;
-	margin-top: 45px;
+	margin-top: 20px;
 }
 
 .game-lifebar > div{

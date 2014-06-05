@@ -33,3 +33,11 @@
 	color: red;
 	font: 42px;
 }
+
+.questionPanel{
+	font-size: 24px;
+}
+
+.radio{
+	margin-top: -20px;
+}

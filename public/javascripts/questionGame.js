@@ -81,8 +81,8 @@ function initGame(){
     stage.addChild(uiContainer);
     
     //sound
-    createjs.Sound.registerSound("assets/bgm.mp3","background");   
-    //createjs.Sound.addEventListener("fileload", loadSoundHandler);
+    createjs.Sound.registerSound("assets/backgroundSound.mp3","background");   
+    createjs.Sound.addEventListener("fileload", loadSoundHandler);
     
     //register key functions
     //document.onkeydown = handleKeyDown;
@@ -90,6 +90,9 @@ function initGame(){
 
     //init players
     initPlayers();
+
+    //text
+    initGameDialog();
 
     //ticker
     createjs.Ticker.addEventListener("tick", handleTick);
@@ -144,6 +147,9 @@ function initialSceneSetting(){
             player1.x += backgroundPosition.x;
             player2.x += backgroundPosition.x;
 
+            //dialog
+            gameInfo.x += backgroundPosition.x;
+
             initialSetting = true;
     }
 
@@ -189,7 +195,7 @@ function initPlayers(){
     player1.x = 0;
     player1.y = 0;
 
-    player2 = new createjs.Bitmap("assets/su1.png");
+    player2 = new createjs.Bitmap("assets/su2.png");
     player2.scaleX = player1.scaleY = 0.9;
     player2.x = 400;
     player2.y = 0;
@@ -261,6 +267,54 @@ function gameEnd(){
     console.log('Game End!');
 }
 
+var gameInfo;
+function initGameDialog(){
+    gameInfo = new createjs.Text('Start!',"32px Arial", "#ff0000");
+    gameInfo.x = 460;
+    gameInfo.y = 100;
+    uiContainer.addChild(gameInfo);
+}
+
+function setDialog(text){
+    gameInfo.text = text;
+}
+
+function playerCorrect(){
+    var positionX = player1.x;
+    var positionY = player1.y;
+    playerContainer.removeChild(player1);
+    player1 = new createjs.Bitmap("assets/ma2.png");
+    player1.x = positionX;
+    player1.y = positionY;
+    playerContainer.addChild(player1);
+
+    positionX = player2.x;
+    positionY = player2.y;
+    playerContainer.removeChild(player2);
+    player2 = new createjs.Bitmap("assets/su3.png");
+    player2.x = positionX;
+    player2.y = positionY;
+    playerContainer.addChild(player2);
+}
+
+function playerWrong(){
+    var positionX = player1.x;
+    var positionY = player1.y;
+    playerContainer.removeChild(player1);
+    player1 = new createjs.Bitmap("assets/ma5.png");
+    player1.x = positionX;
+    player1.y = positionY;
+    playerContainer.addChild(player1);
+
+    positionX = player2.x;
+    positionY = player2.y;
+    playerContainer.removeChild(player2);
+    player2 = new createjs.Bitmap("assets/su1.png");
+    player2.x = positionX;
+    player2.y = positionY;
+    playerContainer.addChild(player2);
+}
+
 function submitAnswer(){
 
     questionNum++;
@@ -269,15 +323,18 @@ function submitAnswer(){
     console.log('answer='+chosedAnswer);
     if(currentAnswer == chosedAnswer){
         console.log("Correct!");
-        correctModalBody.modal({backdrop:false});
-
+        //correctModalBody.modal({backdrop:false});
+        setDialog('Correct!');
+        playerCorrect();
         //add correct count
         correctCount++;
         //correctModalBody.modal('show');
     }
     else{
         console.log("Wrong!");
-        wrongModalBody.modal({backdrop:false});
+        //wrongModalBody.modal({backdrop:false});
+        setDialog('Wrong!');
+        playerWrong();
 
         //decrease life
         playerLife -= 20;

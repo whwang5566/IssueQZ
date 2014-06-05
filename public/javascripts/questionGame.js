@@ -230,7 +230,7 @@ function gameEnd(){
 
         //set data
         var correctRatio = ((correctCount)/(questionNum))*100;
-        statPanel.find('.panel-body p').html('您的答對率為 <span class="redLargeFont">'+correctRatio+'%</span>');
+        statPanel.find('.panel-body p').html('您的答對率為 <span class="redLargeFont">'+correctRatio.toFixed(1)+'%</span>');
 
         //append
         statPanel.appendTo(questionContainer);

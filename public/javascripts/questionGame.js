@@ -36,6 +36,8 @@ var player2;
 var initialSetting = false;
 var backgroundPosition = {x:0,y:0};
 
+var gameFinish = false;
+
 //timer
 var countdownTime = 15;
 
@@ -199,6 +201,9 @@ function initPlayers(){
 
 //game end
 function gameEnd(){
+    if(gameFinish == true) return;
+
+    gameFinish = true;
     //stop timer
     $(".ccounter").ccountdownStop();
     //hide timer
@@ -211,6 +216,11 @@ function gameEnd(){
     {
         //statas
         var statPanel = $(tmpFinalStatisticsPanel);
+
+        //check 
+        if(questionNum>questionArray.length) {
+            questionNum = questionArray.length;
+        }
 
         //set data
         var correctRatio = ((correctCount)/(questionNum))*100;
@@ -295,6 +305,9 @@ function nextQuestion(){
     currentQuestionPanel.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', new function(){
         //remove self
         currentQuestionPanel.remove();
+
+        if(gameFinish == true) return;
+    
         //new question
         currentQuestionIndex++;
         setCurrentQuestion();

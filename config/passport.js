@@ -1,11 +1,11 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-var clientID = '736947549697888';
-//var clientID = '736936806365629';
+//var clientID = '736947549697888';
+var clientID = '736936806365629';
 
-var clientSecret = '5507b62400511ed11e00ad0ab17c6968';
-//var clientSecret = 'dd03f3b95e578ce6dd66a4965c7ff220';
+//var clientSecret = '5507b62400511ed11e00ad0ab17c6968';
+var clientSecret = 'dd03f3b95e578ce6dd66a4965c7ff220';
 
 //db
 var mongoose = require('mongoose');

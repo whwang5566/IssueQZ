@@ -154,7 +154,14 @@ function setEvents(res){
 
 
 		eventContainer.find('#answer').text(answer);
-		eventContainer.find('#explain').text(qEvent.explanation);
+		console.log('ex:'+qEvent.explanation.replace(/\s+/g, '').length);
+		if(qEvent.explanation.replace(/\s+/g, '').length == 0){
+			eventContainer.find('#exDiv').hide();
+			eventContainer.find('#exLabel').hide();
+		}
+		else {
+			eventContainer.find('#explain').text(qEvent.explanation);
+		}
 		eventContainer.find('#link').text(qEvent.link);
 		eventContainer.find('#link').attr('href',qEvent.link);
 

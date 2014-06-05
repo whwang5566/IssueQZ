@@ -39,7 +39,7 @@ var backgroundPosition = {x:0,y:0};
 var gameFinish = false;
 
 //timer
-var countdownTime = 15;
+var countdownTime = 30;
 
 function initGame(){
 
